@@ -7,15 +7,16 @@
 plotCalibrationCurve(cc, individuals = TRUE)
 }
 \arguments{
-\item{cc}{[list()] Object returned by `dsCalibrationCurve()`}
+\item{cc}{(\code{list()}) Object returned by \code{dsCalibrationCurve()}}
 
-\item{individuals}{[logical(1L)] Logical value indicating whether the individual calibration curves should be plotted or not (default is `TRUE`).}
+\item{individuals}{(\code{logical(1L)}) Logical value indicating whether the individual calibration
+curves should be plotted or not (default is \code{TRUE}).}
 }
 \value{
 ggplot of calibration curve(s)
 }
 \description{
-This function plots the calibration curve returned by `dsCalibrationCurve()`.
+This function plots the calibration curve returned by \code{dsCalibrationCurve()}.
 }
 \author{
 Daniel S.

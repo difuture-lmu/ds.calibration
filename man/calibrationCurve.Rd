@@ -4,16 +4,15 @@
 \alias{calibrationCurve}
 \title{Calculate data for calibration curve}
 \usage{
-calibrationCurve(truth_name, prob_name, nbins = 10L, nprivacy = 5L)
+calibrationCurve(truth_name, prob_name, nbins = 10L)
 }
 \arguments{
-\item{truth_name}{[character(1L)] Character containing the name of the vector of 0-1-values encoded as integer or numeric.}
+\item{truth_name}{(\code{character(1L)}) Character containing the name of the vector of
+0-1-values encoded as integer or numeric.}
 
-\item{prob_name}{[character(1L)] Character containing the name of the vector of probabilities.}
+\item{prob_name}{(\code{character(1L)}) Character containing the name of the vector of probabilities.}
 
-\item{nbins}{[integer(1L)] Number of bins between 0 and 1 (default is 10).}
-
-\item{nprivacy}{[integer(1L)] Number of values per bin to ensure privacy (default is 5).}
+\item{nbins}{(\code{integer(1L)}) Number of bins between 0 and 1 (default is 10).}
 }
 \value{
 Brier score and number of values used as weights for later aggregation.

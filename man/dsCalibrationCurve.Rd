@@ -4,27 +4,19 @@
 \alias{dsCalibrationCurve}
 \title{Calculate calibration curve on DataSHIELD servers}
 \usage{
-dsCalibrationCurve(
-  connections,
-  truth_name,
-  pred_name,
-  nbins = 10L,
-  nprivacy = 5L
-)
+dsCalibrationCurve(connections, truth_name, pred_name, nbins = 10L)
 }
 \arguments{
-\item{connections}{[DSI::connection] Connection to an OPAL server.}
+\item{connections}{(\code{DSI::connection}) Connection to an OPAL server.}
 
-\item{truth_name}{[character(1L)] R object containing the models name as character.}
+\item{truth_name}{(\code{character(1L)}) \code{R} object containing the models name as character.}
 
-\item{pred_name}{[character(1L)] Name of the object predictions should be assigned to.}
+\item{pred_name}{(\code{character(1L)}) Name of the object predictions should be assigned to.}
 
-\item{nbins}{[integer(1L)] Number of bins between 0 and 1 (default is 10).}
-
-\item{nprivacy}{[integer(1L)] Number of values per bin to ensure privacy (default is 5).}
+\item{nbins}{(\code{integer(1L)}) Number of bins between 0 and 1 (default is 10).}
 }
 \value{
-Brier score for multiple server
+Calibration curve for multiple server
 }
 \description{
 This function enables to calculate a calibration curve on DataSHIELD servers.

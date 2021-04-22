@@ -2,21 +2,22 @@
 % Please edit documentation in R/brierScore.R
 \name{brierScore}
 \alias{brierScore}
-\title{Calculate brier score}
+\title{Calculate Brier score}
 \usage{
 brierScore(truth_name, prob_name)
 }
 \arguments{
-\item{truth_name}{[character(1L)] Character containing the name of the vector of 0-1-values encoded as integer or numeric.}
+\item{truth_name}{(\code{character(1L)}) Character containing the name of the vector of 0-1-values
+encoded as integer or numeric.}
 
-\item{prob_name}{[character(1L)] Character containing the name of the vector of probabilities.}
+\item{prob_name}{(\code{character(1L)}) Character containing the name of the vector of probabilities.}
 }
 \value{
 Brier score and number of values used as weights for later aggregation.
 }
 \description{
-This function calculates the brier score for a given 0-1-vector and
-  vector of probabilities.
+This function calculates the Brier score for a given 0-1-vector and
+vector of probabilities.
 }
 \author{
 Daniel S.

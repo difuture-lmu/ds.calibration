@@ -2,23 +2,23 @@
 % Please edit documentation in R/brierScore.R
 \name{dsBrierScore}
 \alias{dsBrierScore}
-\title{Calculate brier score on DataSHIELD servers}
+\title{Calculate Brier score on DataSHIELD servers}
 \usage{
 dsBrierScore(connections, truth_name, pred_name)
 }
 \arguments{
-\item{connections}{[DSI::connection] Connection to an OPAL server.}
+\item{connections}{(\code{DSI::connection}) Connection to an OPAL server.}
 
-\item{truth_name}{[character(1L)] R object containing the models name as character.}
+\item{truth_name}{(\code{character(1L)}) \code{R} object containing the models name as character.}
 
-\item{pred_name}{[character(1L)] Name of the object predictions should be assigned to.}
+\item{pred_name}{(\code{character(1L)}) Name of the object predictions should be assigned to.}
 }
 \value{
 Brier score for multiple server
 }
 \description{
-This function enables to calculate the brier score distributively
-  on DataSHIELD servers.
+This function enables to calculate the Brier score distributively
+on DataSHIELD servers.
 }
 \author{
 Daniel S.
