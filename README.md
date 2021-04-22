@@ -24,7 +24,9 @@ to push and predict models see the package
 Note that DataSHIELD uses an option `datashield.privacyLevel` to
 indicate the minimal amount of numbers required to be allowed to share
 an aggregated value of these numbers. This options is set to 5 by
-default. It is set in the `init.R` file of this package.
+default. It is set in the
+[`init.R`](https://github.com/difuture-lmu/ds.calibration/blob/master/R/init.R)
+file of this package.
 
 ## Installation
 
