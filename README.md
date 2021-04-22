@@ -25,7 +25,7 @@ Note that DataSHIELD uses an option `datashield.privacyLevel` to
 indicate the minimal amount of numbers required to be allowed to share
 an aggregated value of these numbers. Instead of setting the option, we
 directly retrieve the privacy level from the
-[`DESCRIPTION`](https://github.com/difuture-lmu/ds.calibration/blob/master/R/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/difuture-lmu/ds.calibration/blob/master/DESCRIPTION)
 file each time a function calls for it. This options is set to 5 by
 default.
 
