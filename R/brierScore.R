@@ -19,7 +19,7 @@ brierScore = function(truth_name, prob_name) {
   checkmate::assertNumeric(prob, len = ntruth, null.ok = FALSE, any.missing = FALSE)
 
   ## Calculate brier score just if there are at least five or more values to ensure privacy:
-  nfilter_privacy = getOption("datashield.privacyLevel")
+  nfilter_privacy = .getPrivacyLevel()
   if (ntruth < nfilter_privacy)
     stop("More than ", nfilter_privacy, " observations are required to ensure privacy!")
 

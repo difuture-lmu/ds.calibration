@@ -35,7 +35,7 @@ calibrationCurve = function(truth_name, prob_name, nbins = 10L) {
   df_count = data.frame(bin = names(tb), n = as.numeric(tb), lower = breaks[-length(breaks)], upper = breaks[-1])
 
   ## Calculate curve only if each bin has at least nfilter_privacy or more values to ensure privacy:
-  nfilter_privacy = getOption("datashield.privacyLevel")
+  nfilter_privacy = .getPrivacyLevel()
   if (any(tb[tb > 0] < nfilter_privacy))
     stop("More than ", nfilter_privacy, " ovservations per bin are required to ensure privacy!")
 
