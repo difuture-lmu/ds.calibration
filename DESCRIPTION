@@ -11,7 +11,7 @@ License: GPL-3
 Description: Calculate the calibration of a model on DataSHIELD servers. The methods provided are the
     Brier score and calibration curves. Note that DataSHIELD uses an option `datashield.privacyLevel`
     to indicate the minimal amount of numbers required to be allowed to share an aggregated value
-    of these numbers. This options is set to 5 by default. It is set in the `zzz.R` file of this
+    of these numbers. This options is set to 5 by default. It is set in the `init.R` file of this
     package.
 Depends:
     R (>= 3.1.0)
