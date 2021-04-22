@@ -1,38 +1,56 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
+[![Actions
+Status](https://github.com/difuture/ds.calibration/workflows/R-CMD-check/badge.svg)](https://github.com/difuture/ds.calibration/actions)
+[![License: LGPL
+v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
+[![codecov](https://codecov.io/gh/difuture/ds.calibration/branch/master/graph/badge.svg?token=OLIPLWDTN5)](https://codecov.io/gh/difuture/ds.calibration)
+
 # Calibration Functions for DataSHIELD
 
-## Overview
+The package provides functionality to assess calibration for a given
+vector of predictions for binary classes on decentralized data. The
+basis is the DataSHIELD\](<https://www.datashield.ac.uk/>)
+infrastructure for distributed computing. This package provides the
+calculation of the [**Brier
+score**](https://en.wikipedia.org/wiki/Brier_score) as well as
+[**calibration
+curves**](https://medium.com/analytics-vidhya/calibration-in-machine-learning-e7972ac93555).
+In order to calculate the Brier score or calibration curves it is
+necessary to have prediction values on the server. For instructions how
+to push and predict models see the package
+[`ds.predict.base`](https://github.com/difuture-lmu/ds.predict.base).
+Note that DataSHIELD uses an option `datashield.privacyLevel` to
+indicate the minimal amount of numbers required to be allowed to share
+an aggregated value of these numbers. This options is set to 5 by
+default. It is set in the `zzz.R` file of this package.
 
 ## Installation
 
-#### Developer version:
-
-The package is currently hosted at a private GitLab repository. If
-access is granted, the installation can be done via `devtools`:
+At the moment, there is no CRAN version available. Install the
+development version from GitHub:
 
 ``` r
-cred = git2r::cred_user_pass(username = "username", password = "password")
-devtools::install_git("https://gitlab.lrz.de/difuture_analysegruppe/ds.calibration.git", credentials = cred)
+remotes::install_github("difuture-lmu/ds.calibration")
 ```
 
-Note that you have to supply your username and password from GitLab to
-install the package.
+#### Register aggregate methods
 
-#### Register assign/aggregate methods
+It is necessary to register the aggregate methods in the OPAL
+administration. The assign methods are:
 
-It is necessary to register the assign/aggregate methods in the OPAL
-administration to use them.
+  - `brierScore`
+  - `calibrationCurve`
 
-**Aggregate methods:**
+These methods are registered automatically when publishing the package
+on OPAL (see
+[`DESCRIPTION`](https://github.com/difuture/ds.predict.base/blob/master/DESCRIPTION)).
 
-  - `ds.calibrate::dsBrierScore`
-  - `ds.calibrate::dsCalibrationCurve`
+Note that the package needs to be installed at both locations, the
+server and the analysts machine.
 
 ## Usage
-
-The following code shows the basic methods and how to use them.
 
 ``` r
 library(DSI)
@@ -40,67 +58,44 @@ library(DSOpal)
 library(DSLite)
 library(dsBaseClient)
 
-devtools::load_all("../ds.predict.base")
-#> Loading ds.predict.base
-# library(ds.calibration)
+library(ds.calibration)
 
 builder = DSI::newDSLoginBuilder()
 
 builder$append(
   server   = "ibe",
-  url      = "https://dsibe.ibe.med.uni-muenchen.de",
-  user     = "ibe",
-  password = "123456",
+  url      = "******",
+  user     = "***",
+  password = "******",
   table    = "ProVal.KUM"
 )
 
 logindata = builder$build()
-connections = DSI::datashield.login(logins = logindata, assign = TRUE, symbol = "D", opts = list(ssl_verifyhost = 0, ssl_verifypeer=0))
-#> 
-#> Logging into the collaborating servers
-#>   Logged in all servers [================================================================] 100% / 1s
-#> 
-#>   No variables have been specified. 
-#>   All the variables in the table 
-#>   (the whole dataset) will be assigned to R!
-#> 
-#> Assigning table data...
-#>   Assigned all tables [==================================================================] 100% / 2s
+connections = DSI::datashield.login(logins = logindata, assign = TRUE, symbol = "D",
+  opts = list(ssl_verifyhost = 0, ssl_verifypeer = 0))
 
 ### Get available tables:
 DSI::datashield.symbols(connections)
 
 ### Test data with same structure as data on test server:
-#dat   = cbind(age = sample(20:100, 100L, TRUE), height = runif(100L, 150, 220))
-#probs = 1 / (1 + exp(-as.numeric(dat %*% c(-3, 1))))
-#dat   = data.frame(gender = rbinom(100L, 1L, probs), dat)
-
 dat = read.csv("data/test-kum.csv")
 
 ### Model we want to upload:
 mod = glm(gender ~ age + height, family = "binomial", data = dat)
 
 ### Upload model to DataSHIELD server
-pushModel(connections, mod)
-#>   Assigned expr. (mod <- decodeModel("58-0a-00-00-00-03-00-04-00-00-00-03-05-00-00-00-00-05-55-54...
+pushObject(connections, mod)
 predictModel(connections, mod, "pred", "D", predict_fun = "predict(mod, newdata = D, type = 'response')")
-#>   Assigned expr. (pred <- assignPredictModel("58-0a-00-00-00-03-00-04-00-00-00-03-05-00-00-00-00-...
 
 DSI::datashield.symbols(connections)
 
 
 ### Calculate brier score:
 dsBrierScore(connections, "D$gender", "pred")
-#>   Aggregated (brierScore("D$gender", "pred")) [==========================================] 100% / 0s
 
 ### Calculate and plot calibration curve:
 cc = dsCalibrationCurve(connections, "D$gender", "pred", 10, 3)
-#>   Aggregated (calibrationCurve("D$gender", "pred", 10, 3)) [=============================] 100% / 0s
 plotCalibrationCurve(cc)
-#> Warning: Removed 1 rows containing missing values (geom_point).
-#> Warning: Removed 1 row(s) containing missing values (geom_path).
-#> Warning: Removed 1 rows containing missing values (geom_point).
-#> Warning: Removed 1 row(s) containing missing values (geom_path).
-```
 
-![](Readme_files/unnamed-chunk-2-1.png)<!-- -->
+DSI::datashield.logout(conns = connections, save = FALSE)
+```
