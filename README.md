@@ -2,7 +2,7 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![Actions
-Status](https://github.com/difuture/ds.calibration/workflows/R-CMD-check/badge.svg)](https://github.com/difuture/ds.calibration/actions)
+Status](https://github.com/difuture-lmu/ds.calibration/workflows/R-CMD-check/badge.svg)](https://github.com/difuture-lmu/ds.calibration/actions)
 [![License: LGPL
 v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
 [![codecov](https://codecov.io/gh/difuture-lmu/ds.calibration/branch/master/graph/badge.svg?token=B27XZ68E20)](https://codecov.io/gh/difuture-lmu/ds.calibration)
@@ -24,7 +24,7 @@ to push and predict models see the package
 Note that DataSHIELD uses an option `datashield.privacyLevel` to
 indicate the minimal amount of numbers required to be allowed to share
 an aggregated value of these numbers. This options is set to 5 by
-default. It is set in the `zzz.R` file of this package.
+default. It is set in the `init.R` file of this package.
 
 ## Installation
 
