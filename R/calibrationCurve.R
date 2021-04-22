@@ -21,7 +21,9 @@ calibrationCurve = function(truth_name, prob_name, nbins = 10L) {
 
   if (is.character(truth)) truth = as.integer(as.factor(truth))
   if (is.factor(truth))    truth = as.integer(truth)
-
+  if (nbins > ntruth / 2)
+    stop("Number of bins `nbins` should be smaller then half the size of `truth`",
+      round(ntruth / 2), ".")
   truth = truth - min(truth)
 
   if (any(truth > 1)) stop("Truth values has to be 0 and 1!")
