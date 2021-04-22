@@ -23,10 +23,11 @@ to push and predict models see the package
 [`ds.predict.base`](https://github.com/difuture-lmu/ds.predict.base).
 Note that DataSHIELD uses an option `datashield.privacyLevel` to
 indicate the minimal amount of numbers required to be allowed to share
-an aggregated value of these numbers. This options is set to 5 by
-default. It is set in the
-[`init.R`](https://github.com/difuture-lmu/ds.calibration/blob/master/R/init.R)
-file of this package.
+an aggregated value of these numbers. Instead of setting the option, we
+directly retrieve the privacy level from the
+[`DESCRIPTION`](https://github.com/difuture-lmu/ds.calibration/blob/master/R/DESCRIPTION)
+file each time a function calls for it. This options is set to 5 by
+default.
 
 ## Installation
 
