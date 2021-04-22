@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 devtools::load_all()
 ```
 
-[![Actions Status](https://github.com/difuture/ds.calibration/workflows/R-CMD-check/badge.svg)](https://github.com/difuture/ds.calibration/actions) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) [![codecov](https://codecov.io/gh/difuture/ds.calibration/branch/master/graph/badge.svg?token=OLIPLWDTN5)](https://codecov.io/gh/difuture/ds.calibration)
+[![Actions Status](https://github.com/difuture/ds.calibration/workflows/R-CMD-check/badge.svg)](https://github.com/difuture/ds.calibration/actions) [![License: LGPL v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0) [![codecov](https://codecov.io/gh/difuture-lmu/ds.calibration/branch/master/graph/badge.svg?token=B27XZ68E20)](https://codecov.io/gh/difuture-lmu/ds.calibration)
 
 # Calibration Functions for DataSHIELD
 
