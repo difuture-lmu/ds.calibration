@@ -1,0 +1,93 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include=FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "Readme_files/"
+)
+
+devtools::load_all()
+```
+
+# Calibration Functions for DataSHIELD
+
+## Overview
+
+## Installation
+
+#### Developer version:
+
+The package is currently hosted at a private GitLab repository. If access is granted, the installation can be done via `devtools`:
+
+```r
+cred = git2r::cred_user_pass(username = "username", password = "password")
+devtools::install_git("https://gitlab.lrz.de/difuture_analysegruppe/ds.calibration.git", credentials = cred)
+```
+
+Note that you have to supply your username and password from GitLab to install the package.
+
+#### Register assign/aggregate  methods
+
+It is necessary to register the assign/aggregate methods in the OPAL administration to use them.
+
+**Aggregate methods:**
+
+- `ds.calibrate::dsBrierScore`
+- `ds.calibrate::dsCalibrationCurve`
+
+## Usage
+
+The following code shows the basic methods and how to use them.
+
+```{r, results="hide", warnings=FALSE}
+library(DSI)
+library(DSOpal)
+library(DSLite)
+library(dsBaseClient)
+
+devtools::load_all("../ds.predict.base")
+# library(ds.calibration)
+
+builder = DSI::newDSLoginBuilder()
+
+builder$append(
+  server   = "ibe",
+  url      = "https://dsibe.ibe.med.uni-muenchen.de",
+  user     = "ibe",
+  password = "123456",
+  table    = "ProVal.KUM"
+)
+
+logindata = builder$build()
+connections = DSI::datashield.login(logins = logindata, assign = TRUE, symbol = "D", opts = list(ssl_verifyhost = 0, ssl_verifypeer=0))
+
+### Get available tables:
+DSI::datashield.symbols(connections)
+
+### Test data with same structure as data on test server:
+dat = read.csv("data/test-kum.csv")
+
+### Model we want to upload:
+mod = glm(gender ~ age + height, family = "binomial", data = dat)
+
+### Upload model to DataSHIELD server
+pushModel(connections, mod)
+predictModel(connections, mod, "pred", "D", predict_fun = "predict(mod, newdata = D, type = 'response')")
+
+DSI::datashield.symbols(connections)
+
+
+### Calculate brier score:
+dsBrierScore(connections, "D$gender", "pred")
+
+### Calculate and plot calibration curve:
+cc = dsCalibrationCurve(connections, "D$gender", "pred", 10, 3)
+plotCalibrationCurve(cc)
+
+DSI::datashield.logout(conns = connections, save = FALSE)
+```
