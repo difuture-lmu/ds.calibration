@@ -11,10 +11,9 @@ v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.or
 
 The package provides functionality to assess calibration for a given
 vector of predictions for binary classes on decentralized data. The
-basis is the DataSHIELD\](<https://www.datashield.ac.uk/>)
-infrastructure for distributed computing. This package provides the
-calculation of the [**Brier
-score**](https://en.wikipedia.org/wiki/Brier_score) as well as
+basis is the DataSHIELD\](<https://www.datashield.org/>) infrastructure
+for distributed computing. This package provides the calculation of the
+[**Brier score**](https://en.wikipedia.org/wiki/Brier_score) as well as
 [**calibration
 curves**](https://medium.com/analytics-vidhya/calibration-in-machine-learning-e7972ac93555).
 In order to calculate the Brier score or calibration curves it is
