@@ -7,7 +7,7 @@ Authors@R:
              role = c("aut", "cre"),
              email = "daniel.schalk@stat.uni-muenchen.de"))
 Version: 0.0.1
-License: GPL-3
+License: LGPL-3
 Description: Calculate the calibration of a model on DataSHIELD servers. The methods provided are the
     Brier score and calibration curves. Note that DataSHIELD uses an option `datashield.privacyLevel`
     to indicate the minimal amount of numbers required to be allowed to share an aggregated value
