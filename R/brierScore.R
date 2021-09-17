@@ -61,10 +61,8 @@ dsBrierScore = function(connections, truth_name, pred_name) {
   eval(parse(text = paste0("cq = quote(", call, ")")))
   individuals  = DSI::datashield.aggregate(conns = connections, cq)
 
-  bs = Reduce("c", lapply(individuals, function (ll) ll$bs))
-  w  = Reduce("c", lapply(individuals, function (ll) ll$n))
+  bs = Reduce("c", lapply(individuals, function(ll) ll$bs))
+  w  = Reduce("c", lapply(individuals, function(ll) ll$n))
 
-  return (stats::weighted.mean(bs, w))
+  return(stats::weighted.mean(bs, w))
 }
-
-

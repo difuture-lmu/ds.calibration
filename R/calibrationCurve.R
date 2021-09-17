@@ -37,7 +37,7 @@ calibrationCurve = function(truth_name, prob_name, nbins = 10L) {
   ## Calculate curve only if each bin has at least nfilter_privacy or more values to ensure privacy:
   nfilter_privacy = .getPrivacyLevel()
   if (any(tb[tb > 0] < nfilter_privacy))
-    stop("More than ", nfilter_privacy, " ovservations per bin are required to ensure privacy!")
+    stop("More than ", nfilter_privacy, " observations per bin are required to ensure privacy!")
 
   df_tmp = data.frame(truth, prob)
   out    = stats::aggregate(df_tmp, by = list(bin = bins), FUN = "mean")
@@ -69,7 +69,7 @@ dsCalibrationCurve = function(connections, truth_name, pred_name, nbins = 10L) {
       stop("There is no data object '", pred_name, "' on server '", s, "'.")
   }
 
-  call = paste0("calibrationCurve(\"", truth_name, "\", \"", pred_name, "\", ", nbins,", ", ")")
+  call = paste0("calibrationCurve(\"", truth_name, "\", \"", pred_name, "\", ", nbins, ")")
   cq = NULL
   eval(parse(text = paste0("cq = quote(", call, ")")))
   individuals = DSI::datashield.aggregate(conns = connections, cq)
