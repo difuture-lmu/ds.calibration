@@ -5,10 +5,11 @@
 #'   0-1-values encoded as integer or numeric.
 #' @param prob_name (`character(1L)`) Character containing the name of the vector of probabilities.
 #' @param nbins (`integer(1L)`) Number of bins between 0 and 1 (default is 10).
+#' @param remove_critical_bins (`logical(1L)`) Just remove critical bins and return just bins with `length(bin) > n_critical`.
 #' @return Brier score and number of values used as weights for later aggregation.
 #' @author Daniel S.
 #' @export
-calibrationCurve = function(truth_name, prob_name, nbins = 10L) {
+calibrationCurve = function(truth_name, prob_name, nbins = 10L, remove_critical_bins = TRUE) {
   checkmate::assertCharacter(truth_name, len = 1L, null.ok = FALSE, any.missing = FALSE)
   checkmate::assertCharacter(prob_name, len = 1L, null.ok = FALSE, any.missing = FALSE)
   checkmate::assertCount(nbins, na.ok = FALSE, positive = TRUE, null.ok = FALSE)
@@ -36,14 +37,25 @@ calibrationCurve = function(truth_name, prob_name, nbins = 10L) {
 
   ## Calculate curve only if each bin has at least nfilter_privacy or more values to ensure privacy:
   nfilter_privacy = .getPrivacyLevel()
-  if (any(tb[tb > 0] < nfilter_privacy))
-    stop("More than ", nfilter_privacy, " observations per bin are required to ensure privacy! Critical number of observations in bin are ", 
-      paste(tb[(tb > 0) & (tb < nfilter_privacy)], collapse = ", "), ".")
+  if (remove_critical_bins) {
+    idx_critical = which((tb < nfilter_privacy) & (tb > 0))
+  } else {
+    if (any(tb[tb > 0] < nfilter_privacy))
+      stop("More than ", nfilter_privacy, " observations per bin are required to ensure privacy! Critical number of observations in bin are ",
+        paste(tb[(tb > 0) & (tb < nfilter_privacy)], collapse = ", "), ".")
+  }
 
   df_tmp = data.frame(truth, prob)
   out    = stats::aggregate(df_tmp, by = list(bin = bins), FUN = "mean")
+  out    = merge(x = df_count, y = out, by = "bin", all.x = TRUE)
 
-  return(merge(x = df_count, y = out, by = "bin", all.x = TRUE))
+  if (remove_critical_bins) {
+    idx_anonymize = out$bin %in% names(idx_critical)
+    out$truth[idx_anonymize] = NA
+    out$prob[idx_anonymize] = NA
+    out$n[idx_anonymize] = NA
+  }
+  return(out)
 }
 
 
@@ -54,10 +66,11 @@ calibrationCurve = function(truth_name, prob_name, nbins = 10L) {
 #' @param truth_name (`character(1L)`) `R` object containing the models name as character.
 #' @param pred_name (`character(1L)`) Name of the object predictions should be assigned to.
 #' @param nbins (`integer(1L)`) Number of bins between 0 and 1 (default is 10).
+#' @param remove_critical_bins (`logical(1L)`) Just remove critical bins and return just bins with `length(bin) > n_critical`.
 #' @return Calibration curve for multiple server
 #' @author Daniel S.
 #' @export
-dsCalibrationCurve = function(connections, truth_name, pred_name, nbins = 10L) {
+dsCalibrationCurve = function(connections, truth_name, pred_name, nbins = 10L, remove_critical_bins = TRUE) {
   checkmate::assertCharacter(truth_name, len = 1L, null.ok = FALSE, any.missing = FALSE)
   checkmate::assertCharacter(pred_name, len = 1L, null.ok = FALSE, any.missing = FALSE)
   checkmate::assertCount(nbins, na.ok = FALSE, positive = TRUE, null.ok = FALSE)
@@ -70,7 +83,7 @@ dsCalibrationCurve = function(connections, truth_name, pred_name, nbins = 10L) {
       stop("There is no data object '", pred_name, "' on server '", s, "'.")
   }
 
-  call = paste0("calibrationCurve(\"", truth_name, "\", \"", pred_name, "\", ", nbins, ")")
+  call = paste0("calibrationCurve(\"", truth_name, "\", \"", pred_name, "\", ", nbins, ", ", remove_critical_bins, ")")
   cq = NULL
   eval(parse(text = paste0("cq = quote(", call, ")")))
   individuals = DSI::datashield.aggregate(conns = connections, cq)

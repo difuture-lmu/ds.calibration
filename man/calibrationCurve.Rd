@@ -4,7 +4,12 @@
 \alias{calibrationCurve}
 \title{Calculate data for calibration curve}
 \usage{
-calibrationCurve(truth_name, prob_name, nbins = 10L)
+calibrationCurve(
+  truth_name,
+  prob_name,
+  nbins = 10L,
+  remove_critical_bins = TRUE
+)
 }
 \arguments{
 \item{truth_name}{(\code{character(1L)}) Character containing the name of the vector of
@@ -13,6 +18,8 @@ calibrationCurve(truth_name, prob_name, nbins = 10L)
 \item{prob_name}{(\code{character(1L)}) Character containing the name of the vector of probabilities.}
 
 \item{nbins}{(\code{integer(1L)}) Number of bins between 0 and 1 (default is 10).}
+
+\item{remove_critical_bins}{(\code{logical(1L)}) Just remove critical bins and return just bins with \code{length(bin) > n_critical}.}
 }
 \value{
 Brier score and number of values used as weights for later aggregation.
