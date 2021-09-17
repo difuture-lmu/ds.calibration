@@ -38,7 +38,7 @@ calibrationCurve = function(truth_name, prob_name, nbins = 10L) {
   nfilter_privacy = .getPrivacyLevel()
   if (any(tb[tb > 0] < nfilter_privacy))
     stop("More than ", nfilter_privacy, " observations per bin are required to ensure privacy! Critical number of observations in bin are ", 
-      paste(tb[(tb > 0) && (tb < nfilter_privacy)], collapse = ", "), ".")
+      paste(tb[(tb > 0) & (tb < nfilter_privacy)], collapse = ", "), ".")
 
   df_tmp = data.frame(truth, prob)
   out    = stats::aggregate(df_tmp, by = list(bin = bins), FUN = "mean")
