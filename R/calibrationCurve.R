@@ -120,10 +120,11 @@ dsCalibrationCurve = function(connections, truth_name, pred_name, nbins = 10L, r
 #' @param cc (`list()`) Object returned by `dsCalibrationCurve()`
 #' @param individuals (`logical(1L)`) Logical value indicating whether the individual calibration
 #'   curves should be plotted or not (default is `TRUE`).
+#' @param ... Additional arguments passed to `geom_point()` and `geom_line()` for the calibration line and points.
 #' @return ggplot of calibration curve(s)
 #' @author Daniel S.
 #' @export
-plotCalibrationCurve = function(cc, individuals = TRUE) {
+plotCalibrationCurve = function(cc, individuals = TRUE, ...) {
   checkmate::assertList(cc, len = 2L)
   temp = lapply(names(cc), function(ccname) checkmate::assertChoice(ccname, choices = c("individuals", "aggregated")))
   checkmate::assertLogical(individuals, len = 1L)
@@ -145,8 +146,8 @@ plotCalibrationCurve = function(cc, individuals = TRUE) {
       ggplot2::labs(color = "Server")
   }
   gg = gg +
-    ggplot2::geom_point(data = cc$aggregated, ggplot2::aes_string(x = "prob", y = "truth")) +
-    ggplot2::geom_line(data = cc$aggregated, ggplot2::aes_string(x = "prob", y = "truth"))
+    ggplot2::geom_point(data = cc$aggregated, ggplot2::aes_string(x = "prob", y = "truth"), ...) +
+    ggplot2::geom_line(data = cc$aggregated, ggplot2::aes_string(x = "prob", y = "truth"), ...)
 
   gg = gg +
     ggplot2::geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "dark red") +

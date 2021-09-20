@@ -4,13 +4,15 @@
 \alias{plotCalibrationCurve}
 \title{Plot calibration curve}
 \usage{
-plotCalibrationCurve(cc, individuals = TRUE)
+plotCalibrationCurve(cc, individuals = TRUE, ...)
 }
 \arguments{
 \item{cc}{(\code{list()}) Object returned by \code{dsCalibrationCurve()}}
 
 \item{individuals}{(\code{logical(1L)}) Logical value indicating whether the individual calibration
 curves should be plotted or not (default is \code{TRUE}).}
+
+\item{...}{Additional arguments passed to \code{geom_point()} and \code{geom_line()} for the calibration line and points.}
 }
 \value{
 ggplot of calibration curve(s)
