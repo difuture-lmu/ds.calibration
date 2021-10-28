@@ -53,7 +53,7 @@ calibrationCurve = function(truth_name, prob_name, nbins = 10L, remove_critical_
     idx_anonymize = out$bin %in% names(idx_critical)
     out$truth[idx_anonymize] = NA
     out$prob[idx_anonymize] = NA
-    out$n[idx_anonymize] = NA
+    #out$n[idx_anonymize] = NA
   }
   return(out)
 }
