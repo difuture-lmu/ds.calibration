@@ -112,7 +112,7 @@ dsCalibrationCurve = function(connections, truth_name, pred_name, nbins = 10L, r
 
   aggregated = data.frame(bin = bins, lower = individuals[[1]]$lower,
     upper = individuals[[1]]$upper, truth = truth, prob = prob,
-    missing_ratio = mising_ratio)
+    missing_ratio = missing_ratio)
 
   return(list(individuals = individuals, aggregated = aggregated))
 }
