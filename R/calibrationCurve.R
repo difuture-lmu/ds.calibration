@@ -92,6 +92,7 @@ dsCalibrationCurve = function(connections, truth_name, pred_name, nbins = 10L, r
   truth   = numeric()
   prob    = numeric()
   weights = integer()
+  missing_ratio = numeric()
   for (b in bins) {
     tmp_truth   = numeric()
     tmp_prob    = numeric()
@@ -106,10 +107,12 @@ dsCalibrationCurve = function(connections, truth_name, pred_name, nbins = 10L, r
     w = sum(tmp_weights, na.rm = TRUE)
     truth = c(truth, sum(tmp_truth, na.rm = TRUE) / w)
     prob  = c(prob, sum(tmp_prob, na.rm = TRUE) / w)
+    missing_ratio = c(missing_ratio, weighted.mean(is.na(tmp_truth), w = tmp_weights))
   }
 
   aggregated = data.frame(bin = bins, lower = individuals[[1]]$lower,
-    upper = individuals[[1]]$upper, truth = truth, prob = prob)
+    upper = individuals[[1]]$upper, truth = truth, prob = prob,
+    missing_ratio = mising_ratio)
 
   return(list(individuals = individuals, aggregated = aggregated))
 }
