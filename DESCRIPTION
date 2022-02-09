@@ -14,11 +14,11 @@ Description: Calculate the calibration of a model on DataSHIELD servers. The met
     of these numbers. Instead of setting the option, we directly retrieve the privacy level from the
     `DESCRIPTION` file each time a function calls for it. The privacy level is set to 5 by default.
 Depends:
-    R (>= 3.1.0),
+    R (>= 3.1.0)
+Imports:
     DSI,
     DSOpal,
-    ds.predict.base
-Imports:
+    ds.predict.base,
     checkmate,
     stringr
 Suggests:
