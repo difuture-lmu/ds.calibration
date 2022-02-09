@@ -155,9 +155,7 @@ plotCalibrationCurve = function(cc, individuals = TRUE, ...) {
   gg = gg +
     ggplot2::geom_abline(slope = 1, intercept = 0, linetype = "dashed", color = "dark red") +
     ggplot2::xlab("Predicted") +
-    ggplot2::ylab("True frequency") +
-    ggplot2::theme_minimal() +
-    ggplot2::scale_color_brewer(palette = "Set1")
+    ggplot2::ylab("True frequency")
 
   return(gg)
 }
