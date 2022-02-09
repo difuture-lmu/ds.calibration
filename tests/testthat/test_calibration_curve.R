@@ -2,9 +2,7 @@ context("Test if calibration curve works")
 
 test_that("calibrationCurve works", {
   x <<- runif(100, 0, 1)
-  set.seed(31415)
   p1 <<- rbinom(100, 1, x)
-  set.seed(31415)
   p2 <<- rbinom(100, 1, x)
 
   expect_error(calibrationCurve("fda", "fdsa"))
@@ -12,8 +10,11 @@ test_that("calibrationCurve works", {
   expect_error(calibrationCurve("p", c("x", "x")))
 
   expect_error({ calibrationCurve("p1", "x", nbins = 51L) })
-  expect_error({ cc1 = calibrationCurve("p1", "x", nbins = 50L) })
-  expect_error({ cc1 = calibrationCurve("p1", "x", nbins = 30L) })
+
+  expect_silent({ cc1 = calibrationCurve("p1", "x", nbins = 50L) })
+  expect_true(any(is.na(cc1$prob)))
+  expect_silent({ cc1 = calibrationCurve("p1", "x", nbins = 30L) })
+  expect_true(any(is.na(cc1$prob)))
 
   expect_silent({ cc1 = calibrationCurve("p1", "x", nbins = 5L) })
   expect_silent({ cc2 = calibrationCurve("p2", "x", nbins = 5L) })
