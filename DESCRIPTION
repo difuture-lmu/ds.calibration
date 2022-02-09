@@ -7,22 +7,24 @@ Authors@R:
              role = c("aut", "cre"),
              email = "daniel.schalk@stat.uni-muenchen.de"))
 Version: 0.0.1
-License: LGPL-3
+License: LGPL (>= 3)
 Description: Calculate the calibration of a model on DataSHIELD servers. The methods provided are the
     Brier score and calibration curves. Note that DataSHIELD uses an option `datashield.privacyLevel`
     to indicate the minimal amount of numbers required to be allowed to share an aggregated value
     of these numbers. Instead of setting the option, we directly retrieve the privacy level from the
     `DESCRIPTION` file each time a function calls for it. The privacy level is set to 5 by default.
 Depends:
-    R (>= 3.1.0)
-Imports:
-    ds.predict.base,
-    checkmate,
+    R (>= 3.1.0),
     DSI,
+    DSOpal,
+    ds.predict.base
+Imports:
+    checkmate,
     stringr
 Suggests:
     testthat,
-    ggplot2
+    ggplot2,
+    opalr
 Remotes:
     difuture-lmu/ds.predict.base
 AggregateMethods:
