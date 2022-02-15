@@ -1,4 +1,4 @@
 library(testthat)
-library(ds.calibration)
+library(dsCalibration)
 
-test_check("ds.calibration")
+test_check("dsCalibration")

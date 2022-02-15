@@ -3,7 +3,7 @@
 # a function is called that uses the privacy level, the function gets it directly from the
 # DESCRIPTION file.
 .getPrivacyLevel = function() {
-  pl = utils::packageDescription("ds.calibration")$Options
+  pl = utils::packageDescription("dsCalibration")$Options
   pl = as.integer(gsub("\\D", "", pl))
   if (is.na(pl)) stop("No privacy level specified in DESCRIPTION.")
   return(pl)
