@@ -2,10 +2,10 @@
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
 [![Actions
-Status](https://github.com/difuture-lmu/ds.calibration/workflows/R-CMD-check/badge.svg)](https://github.com/difuture-lmu/ds.calibration/actions)
+Status](https://github.com/difuture-lmu/dsCalibration/workflows/R-CMD-check/badge.svg)](https://github.com/difuture-lmu/dsCalibration/actions)
 [![License: LGPL
 v3](https://img.shields.io/badge/License-LGPL%20v3-blue.svg)](https://www.gnu.org/licenses/lgpl-3.0)
-[![codecov](https://codecov.io/gh/difuture-lmu/ds.calibration/branch/master/graph/badge.svg?token=B27XZ68E20)](https://codecov.io/gh/difuture-lmu/ds.calibration)
+[![codecov](https://codecov.io/gh/difuture-lmu/dsCalibration/branch/master/graph/badge.svg?token=B27XZ68E20)](https://codecov.io/gh/difuture-lmu/dsCalibration)
 
 # Calibration Functions for DataSHIELD
 
@@ -19,12 +19,12 @@ curves**](https://medium.com/analytics-vidhya/calibration-in-machine-learning-e7
 In order to calculate the Brier score or calibration curves it is
 necessary to have prediction values on the server. For instructions how
 to push and predict models see the package
-[`ds.predict.base`](https://github.com/difuture-lmu/ds.predict.base).
-Note that DataSHIELD uses an option `datashield.privacyLevel` to
-indicate the minimal amount of numbers required to be allowed to share
-an aggregated value of these numbers. Instead of setting the option, we
-directly retrieve the privacy level from the
-[`DESCRIPTION`](https://github.com/difuture-lmu/ds.calibration/blob/master/DESCRIPTION)
+[`dsPredictBase`](https://github.com/difuture-lmu/dsPredictBase). Note
+that DataSHIELD uses an option `datashield.privacyLevel` to indicate the
+minimal amount of numbers required to be allowed to share an aggregated
+value of these numbers. Instead of setting the option, we directly
+retrieve the privacy level from the
+[`DESCRIPTION`](https://github.com/difuture-lmu/dsCalibration/blob/master/DESCRIPTION)
 file each time a function calls for it. This options is set to 5 by
 default.
 
@@ -34,7 +34,7 @@ At the moment, there is no CRAN version available. Install the
 development version from GitHub:
 
 ``` r
-remotes::install_github("difuture-lmu/ds.calibration")
+remotes::install_github("difuture-lmu/dsCalibration")
 ```
 
 #### Register aggregate methods
@@ -47,7 +47,7 @@ administration. The assign methods are:
 
 These methods are registered automatically when publishing the package
 on OPAL (see
-[`DESCRIPTION`](https://github.com/difuture/ds.predict.base/blob/master/DESCRIPTION)).
+[`DESCRIPTION`](https://github.com/difuture/dsPredictBase/blob/master/DESCRIPTION)).
 
 Note that the package needs to be installed at both locations, the
 server and the analysts machine.
@@ -60,7 +60,7 @@ library(DSOpal)
 library(DSLite)
 library(dsBaseClient)
 
-library(ds.calibration)
+library(dsCalibration)
 
 builder = DSI::newDSLoginBuilder()
 
